@@ -48,8 +48,6 @@ $hotels = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotel</title>
-  <!-- CUSTOM STYLE SHEET FILE LINK -->
-  <link rel="stylesheet" href="./css/style.css">
 
   <!-- THIRD PARTY LIBRARIES -->
   <!-- BOOTSTRAP CDN -->
@@ -65,13 +63,30 @@ $hotels = [
     <div class="row">
       <div class="col">
 
-        <form method="GET" class="my-5">
-          <select class="form-select mb-2" name="Parking">
-            <option selected hidden value="null">Parcheggio</option>
-            <option value="1">Si</option>
-            <option value="0">No</option>
-          </select>
-          <button type="submit" class="btn btn-primary">invia</button>
+        <form method="GET" class="d-flex my-5">
+          <div class="row w-100">
+            <div class="col-6">
+              <select class="form-select mb-2" name="Parking">
+                <option selected hidden value="null">Parcheggio</option>
+                <option value="1">Si</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <select class="form-select mb-2" name="Rating">
+                <option selected hidden value="null">Valutazione</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">invia</button>
+            </div>
+          </div>
         </form>
 
         <table class="table">
@@ -87,7 +102,14 @@ $hotels = [
           <tbody>
             <?php
             foreach ($hotels as $hotel) {
-              if (!$_GET || $hotel['parking'] == $_GET['Parking'] || $_GET['Parking'] == 'null') {
+              if (
+                !$_GET
+                || $hotel['parking'] == $_GET['Parking'] && $hotel['vote'] >= $_GET['Rating']
+                || $hotel['parking'] == $_GET['Parking'] && $_GET['Rating'] == 'null'
+                || $_GET['Parking'] == 'null' && $hotel['vote'] >= $_GET['Rating']
+                || $_GET['Rating'] == 'null' && $_GET['Parking'] == 'null'
+
+              ) {
             ?>
                 <tr>
                   <th scope="row"><?php echo $hotel['name'] ?></th>
