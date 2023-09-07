@@ -39,7 +39,6 @@ $hotels = [
   ],
 
 ];
-
 ?>
 
 <!DOCTYPE html>
@@ -66,6 +65,15 @@ $hotels = [
     <div class="row">
       <div class="col">
 
+        <form method="GET" class="my-5">
+          <select class="form-select mb-2" name="Parking">
+            <option selected hidden value="null">Parcheggio</option>
+            <option value="1">Si</option>
+            <option value="0">No</option>
+          </select>
+          <button type="submit" class="btn btn-primary">invia</button>
+        </form>
+
         <table class="table">
           <thead>
             <tr>
@@ -79,15 +87,17 @@ $hotels = [
           <tbody>
             <?php
             foreach ($hotels as $hotel) {
+              if (!$_GET || $hotel['parking'] == $_GET['Parking'] || $_GET['Parking'] == 'null') {
             ?>
-              <tr>
-                <th scope="row"><?php echo $hotel['name'] ?></th>
-                <td><?php echo $hotel['description'] ?></td>
-                <td><?php echo $hotel['parking'] ? 'Si' : 'No' ?></td>
-                <td><?php echo $hotel['vote'] ?></td>
-                <td><?php echo $hotel['distance_to_center'] ?></td>
-              </tr>
+                <tr>
+                  <th scope="row"><?php echo $hotel['name'] ?></th>
+                  <td><?php echo $hotel['description'] ?></td>
+                  <td><?php echo $hotel['parking'] ? 'Si' : 'No' ?></td>
+                  <td><?php echo $hotel['vote'] ?></td>
+                  <td><?php echo $hotel['distance_to_center'] ?></td>
+                </tr>
             <?php
+              }
             }
             ?>
           </tbody>
